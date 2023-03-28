@@ -97,7 +97,7 @@ app.use(authRoutes);
 app.get('/', (req, res, next) => {
   res.render('home', {
     pageTitle: 'Home',
-    msg: 'Welcome to the Scheduling App!',
+    msg: 'Welcome to Appointment Scheduling Application',
     isAuthenticated: req.session.isLoggedIn,
   });
 });

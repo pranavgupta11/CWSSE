@@ -55,6 +55,17 @@ body #day-profile-view .profile-container .schedule .appointment .reason {
   -ms-grid-column-span: 3;
   grid-column: 1/4;
 }
+body #date-container{
+  text-align: center;
+  margin: 2px 15%;
+  padding: 0 10px;
+}
+body #date-btn{
+  margin-top: 15px;
+}
+#hospName{
+  text-align: center;
+}
 
 @media screen and (min-width: 640px) {
   body #day-profile-view .profile-container {
