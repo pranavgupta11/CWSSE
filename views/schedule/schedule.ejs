@@ -28,12 +28,12 @@
               <h3><%= profile.fname %> <%= profile.lname %></h3>
               <section>
                 <p class="phone-p">
-                  Phone:
-                  <a href="tel:<%= profile.phone %> "><%= profile.phone %></a>
+                  Contact:
+                  <a style="color: #E5E5CB;" href="tel:<%= profile.phone %> "><%= profile.phone %></a>
                 </p>
-                <p>Position: <%= profile.position %></p>
-                <a
-                  class="btn"
+                <p id="designation">Designation: <%= profile.position %></p>
+                <a id="editProfile" style="color: #3C2A21;"
+                  class="btn profile-txt"
                   href="/schedule/profile/<%= profile._id %>?edit=true"
                   >Edit Profile</a
                 >

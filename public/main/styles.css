@@ -1,6 +1,17 @@
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 body {
   background-color: #D5CEA3;
   width: 100%;
+  /* overflow: hidden; */
 }
 
 body header {
@@ -46,6 +57,7 @@ body header nav ul .nav-btn:hover {
 
 body main #content {
   margin: 40px 15px;
+  
   
 }
 /*# sourceMappingURL=styles.css.map */
