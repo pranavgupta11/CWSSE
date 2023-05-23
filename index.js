@@ -17,9 +17,7 @@ const isAuth = require('./middleware/is-auth');
 
 // set up the server
 const MONGODB_URL = process.env.MONGODB_URL || process.env.DB_CONNECTION;
-
 const PORT = process.env.PORT || 5050;
-
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -94,6 +92,8 @@ app.use((req, res, next) => {
 app.use('/schedule', isAuth, schRoutes);
 app.use(authRoutes);
 
+
+
 app.get('/', (req, res, next) => {
   res.render('home', {
     pageTitle: 'Home',
@@ -101,6 +101,27 @@ app.get('/', (req, res, next) => {
     isAuthenticated: req.session.isLoggedIn,
   });
 });
+
+// app.get('/api', async (req, res) => {
+//   const url = 'https://drug-info-and-price-history.p.rapidapi.com/1/druginfo?drug=advil';
+//   const options = {
+//     method: 'GET',
+//     headers: {
+//       'X-RapidAPI-Key': 'e4675e6b2dmsh09e2740c10e6b42p1b0604jsn4f8d58c1c6cd',
+//       'X-RapidAPI-Host': 'drug-info-and-price-history.p.rapidapi.com'
+//     }
+//   };
+
+//   try {
+//     const response = await fetch(url, options);
+//     const result = await response.text();npm start
+//     res.render('index1', { result });
+//   } catch (error) {
+//     console.error(error);
+//     res.render('error', { error: 'An error occurred' });
+//   }
+// });
+
 
 // start the server and listen for requests
 mongoose

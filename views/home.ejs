@@ -1,25 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/normalize.css" />
-    <link rel="stylesheet" href="/main/styles.css" />
-    <title><%= pageTitle %></title>
-  </head>
-  <body>
-    <header><%- include("../views/includes/nav.ejs") %></header>
-    <main>
-      <h1 class="heading"><%= msg %></h1>
-      <% if (isAuthenticated) { %>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/normalize.css" />
+  <link rel="stylesheet" href="/main/styles.css" />
+  <title><%= pageTitle %></title>
+</head>
+<style>
+  .drugBox{
+    background-color: red;
+    text-align: center;
+    margin: 2% 10%;
+    padding: 1%;
+    border-radius: 15px;
+  }
+  .drug-card {
+  background-color: #8D7B68;;
+  /* border-radius: 5px; */
+  /* padding: 20px; */
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: 2% 10%;
+  padding: 1%;
+  border-radius: 15px;
+  color: white ;
+}
+/* .drug-card {
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+} */
+
+.drug-card h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.drug-card form {
+  margin-top: 20px;
+}
+
+.drug-card input[type="text"] {
+  width:max-content ;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.drug-card button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #372b02;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.drug-card p {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 16px;
+}
+
+.drug-card ul {
+  padding-left: 20px;
+  margin: 0;
+  color: #2a1c03;
+  font-size: 16px;
+}
+
+.drug-card ul li {
+  list-style: none;
+  margin-bottom: 5px;
+}
+
+.drug-card h4 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 18px;
+}
+
+</style>
+<body>
+  <header><%- include("../views/includes/nav.ejs") %></header>
+  <main>
+    <h1 class="heading"><%= msg %></h1>
+    <% if (isAuthenticated) { %>
       <h2>You are logged in!</h2>
-      <% } else { %>
-            <h2 style="text-align: center;">Cloud and Web Service Software Engineering</h2>
-            <h3 style="text-align: center;"> [17M11CS121]</h3>
-            <h3 style="text-align: center;"> Project Based Learning</h3>
-        <% } %>
-    </main>
-    <footer></footer>
-  </body>
+    <% } else { %>
+      <h2 style="text-align: center;">Cloud and Web Service Software Engineering</h2>
+      <h3 style="text-align: center;">[17M11CS121]</h3>
+      <h3 style="text-align: center;">Project Based Learning</h3>
+    <% } %>
+    
+    <div class="drug-card">
+      <h3>Know Your Drug</h3>
+      <form id="searchForm">
+        <input type="text" id="searchInput" placeholder="Enter a drug name" />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    
+    <div class="drug-card" id="searchResults"></div>
+  </main>
+  <footer></footer>
+
+  <script>
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    function searchDrug(event) {
+      event.preventDefault();
+      
+      const searchTerm = searchInput.value.trim();
+
+      if (searchTerm === '') {
+        searchResults.innerHTML = 'Please enter a drug name.';
+        return;
+      }
+
+      const url = `https://drug-info-and-price-history.p.rapidapi.com/1/druginfo?drug=${encodeURIComponent(searchTerm)}`;
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': 'e4675e6b2dmsh09e2740c10e6b42p1b0604jsn4f8d58c1c6cd',
+          'X-RapidAPI-Host': 'drug-info-and-price-history.p.rapidapi.com'
+        }
+      };
+
+      fetch(url, options)
+        .then(response => response.json())
+        .then(result => {
+          displayResults(result);
+        })
+        .catch(error => {
+          console.error(error);
+          searchResults.innerHTML = 'Error.';
+        });
+    }
+
+    function displayResults(data) {
+      if (data.length === 0) {
+        searchResults.innerHTML = 'No results found.';
+        return;
+      }
+
+      const resultHTML = data.map(drug => {
+        const {
+          generic_name,
+          labeler_name,
+          active_ingredients,
+          packaging,
+          dosage_form
+        } = drug;
+
+        const ingredients = active_ingredients.map(ingredient => {
+          return `<li>${ingredient.name} (${ingredient.strength})</li>`;
+        }).join('');
+
+        const packagingInfo = packaging.map(package => {
+          return `<li>${package.description}</li>`;
+        }).join('');
+
+        return `
+          <div>
+            <h3>Generic Name: ${generic_name}</h3>
+            <p>Labeler Name: ${labeler_name}</p>
+            <h4>Active Ingredients:</h4>
+            <ul>${ingredients}</ul>
+            <h4>Packaging:</h4>
+            <ul>${packagingInfo}</ul>
+            <p>Dosage Form: ${dosage_form}</p>
+          </div>
+        `;
+      }).join('');
+
+      searchResults.innerHTML = resultHTML;
+    }
+
+    searchForm.addEventListener('submit', searchDrug);
+  </script>
+</body>
 </html>

@@ -9,6 +9,24 @@
     <link rel="stylesheet" href="/forms/forms.css" />
     <link rel="stylesheet" href="/schedule/profiles.css" />
     <script src="/js/schedule-layout.js" defer></script>
+    <script>
+    const url = 'https://drug-info-and-price-history.p.rapidapi.com/1/druginfo?drug=advil';
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': 'e4675e6b2dmsh09e2740c10e6b42p1b0604jsn4f8d58c1c6cd',
+          'X-RapidAPI-Host': 'drug-info-and-price-history.p.rapidapi.com'
+        }
+      };
+      
+      try {
+        const response = await fetch(url, options);
+        const result = await response.text();
+        console.log("Medicine Details" +result);
+      } catch (error) {
+        console.error(error);
+      }
+      </script>
     <title><%= pageTitle %></title>
   </head>
   <body>
