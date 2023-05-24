@@ -9,24 +9,65 @@
     <link rel="stylesheet" href="/forms/forms.css" />
     <link rel="stylesheet" href="/schedule/profiles.css" />
     <script src="/js/schedule-layout.js" defer></script>
-    <script>
-    const url = 'https://drug-info-and-price-history.p.rapidapi.com/1/druginfo?drug=advil';
-      const options = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Key': 'e4675e6b2dmsh09e2740c10e6b42p1b0604jsn4f8d58c1c6cd',
-          'X-RapidAPI-Host': 'drug-info-and-price-history.p.rapidapi.com'
-        }
-      };
-      
-      try {
-        const response = await fetch(url, options);
-        const result = await response.text();
-        console.log("Medicine Details" +result);
-      } catch (error) {
-        console.error(error);
-      }
-      </script>
+    <style>
+  
+
+.appointment {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #e8d797;
+}
+
+.apt-box-1,
+.apt-box-2,
+.apt-box-3 {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.apt-name {
+  font-weight: bold;
+  margin: 0;
+}
+
+.apt-phone1,
+.apt-phone2 {
+  margin-top: 5px;
+  color: #333;
+  text-decoration: none;
+}
+
+.apt-time,
+.apt-duration {
+  margin: 0;
+}
+
+.apt-details-btn,
+.apt-delete {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #ccc;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  background-color: #534200;
+}
+
+.apt-delete {
+  background-color: #f44336;
+}
+
+.reason {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+
+    </style>
     <title><%= pageTitle %></title>
   </head>
   <body>
@@ -50,11 +91,11 @@
                   <a style="color: #E5E5CB;" href="tel:<%= profile.phone %> "><%= profile.phone %></a>
                 </p>
                 <p id="designation">Designation: <%= profile.position %></p>
-                <a id="editProfile" style="color: #3C2A21;"
+                <!-- <a id="editProfile" style="color: #3C2A21;"
                   class="btn profile-txt"
                   href="/schedule/profile/<%= profile._id %>?edit=true"
                   >Edit Profile</a
-                >
+                > -->
               </section>
               <div class="schedule" id="<%= profile._id %>"></div>
             </div>

@@ -21,6 +21,8 @@ router.post('/profile', schCtrl.postProfile);
 // /schedule/add-appointment => POST
 router.post('/add-appointment', schCtrl.postAppointment);
 
+
+// /schedule/load
 router.get('/load/:profileId/:date', schCtrl.getScheduleData);
 
 router.post('/delete/:profileId/:schId', schCtrl.deleteAppointment);

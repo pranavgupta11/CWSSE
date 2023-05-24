@@ -32,9 +32,8 @@ body #day-profile-view .profile-container section a:link {
 }
 
 body #day-profile-view .profile-container .schedule .appointment {
-  background-color: #f4f7f5;
   border: 1px solid #222823;
-  border-left: 4px solid #00978d;
+  border-left: 10px solid #482e02;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (1fr)[3];

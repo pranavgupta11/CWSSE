@@ -13,6 +13,7 @@
     <header><%- include('../includes/nav.ejs') %></header>
     <main>
       <div id="content">
+        <% if (!editing) { %>  <h1 style="text-align: center;" >Add Doctor</h1> <% } %>
         <div class="form-container">
           <form
             action="<% if (!editing) { %>/schedule/profile<% } else { %>/schedule/update-profile<% } %>"

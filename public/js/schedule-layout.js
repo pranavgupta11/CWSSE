@@ -7,7 +7,7 @@
 // elements id and then call the api route to get the schedule data.
 
 // replace this base url with url from .env
-const baseUrl = 'http://localhost:5050/schedule/load/';
+const baseUrl = 'http://localhost:3000/schedule/load/';
 
 function getElements() {
   /**
@@ -67,7 +67,7 @@ const getData = async (url) => {
 function sortData(data) {
   data.appointments.forEach((item) => (item.dayTime = new Date(item.dayTime)));
   data.appointments.sort((d1, d2) => d1.dayTime - d2.dayTime);
-  // console.log(data);
+  console.log(data);
   return data.appointments;
 }
 
@@ -126,14 +126,19 @@ function generateHtml(appointment, profileId) {
   durationElem.className = 'apt-duration';
   durationElem.innerHTML = '<b>Duration: </b>' + appointment.duration;
 
-  const detailsBtn = document.createElement('button');
-  detailsBtn.className = 'apt-details-btn';
-  detailsBtn.id = appointment._id;
-  detailsBtn.innerHTML = 'Details';
+  // const detailsBtn = document.createElement('button');
+  // detailsBtn.className = 'apt-details-btn';
+  // detailsBtn.id = appointment._id;
+  // detailsBtn.innerHTML = 'Details';
+  const phoneElem2 = document.createElement('a');
+  phoneElem2.className = 'apt-phone2';
+  phoneElem2.href = 'tel:' + appointment.phone;
+  phoneElem2.innerHTML = '<b>Contact: </b>' + appointment.phone;
 
   divTwo.appendChild(timeElem);
   divTwo.appendChild(durationElem);
-  divTwo.appendChild(detailsBtn);
+  // divTwo.appendChild(detailsBtn);
+  divTwo.appendChild(phoneElem2);
 
   // column three
   const divThree = document.createElement('div');
@@ -160,13 +165,19 @@ function generateHtml(appointment, profileId) {
   delForm.appendChild(delBtn);
   delForm.appendChild(delInput);
 
-  const phoneElem2 = document.createElement('a');
-  phoneElem2.className = 'apt-phone2';
-  phoneElem2.href = 'tel:' + appointment.phone;
-  phoneElem2.innerHTML = appointment.phone;
+  // const phoneElem2 = document.createElement('a');
+  // phoneElem2.className = 'apt-phone2';
+  // phoneElem2.href = 'tel:' + appointment.phone;
+  // phoneElem2.innerHTML = appointment.phone;
 
+  const detailsBtn = document.createElement('button');
+  detailsBtn.className = 'apt-details-btn';
+  detailsBtn.id = appointment._id;
+  detailsBtn.innerHTML = 'Details';
+  divThree.appendChild(detailsBtn);
   divThree.appendChild(delForm);
-  divThree.appendChild(phoneElem2);
+  // divThree.appendChild(phoneElem2);
+
 
   // reason element
   const reasonElem = document.createElement('p');
